@@ -1,0 +1,47 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model competitions {
+  id            Int           @id @default(autoincrement())
+  name          String        @db.VarChar(255)
+  creatorUserId String        @map("creator_user_id") @db.VarChar(255)
+  winPoints     Float         @map("win_points")
+  drawPoints    Float         @map("draw_points")
+  lossPoints    Float         @map("loss_points")
+  competitors   competitors[]
+  matches       matches[]
+}
+
+model competitors {
+  id                                          Int          @id @default(autoincrement())
+  name                                        String       @db.VarChar(255)
+  competitionId                               Int          @map("competition_id")
+  wins                                        Int          @default(0)
+  draws                                       Int          @default(0)
+  losses                                      Int          @default(0)
+  competitions                                competitions @relation(fields: [competitionId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  matches_matches_competitor1_idTocompetitors matches[]    @relation("matches_competitor1_idTocompetitors")
+  matches_matches_competitor2_idTocompetitors matches[]    @relation("matches_competitor2_idTocompetitors")
+}
+
+model matches {
+  id                                              Int          @id @default(autoincrement())
+  competitionId                                   Int          @map("competition_id")
+  competitor1Id                                   Int          @map("competitor1_id")
+  competitor2Id                                   Int          @map("competitor2_id")
+  round                                           Int
+  score1                                          Int?
+  score2                                          Int?
+  competitions                                    competitions @relation(fields: [competitionId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  competitors_matches_competitor1_idTocompetitors competitors  @relation("matches_competitor1_idTocompetitors", fields: [competitor1Id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "matches_competitor_1_id_fkey")
+  competitors_matches_competitor2_idTocompetitors competitors  @relation("matches_competitor2_idTocompetitors", fields: [competitor2Id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "matches_competitor_2_id_fkey")
+
+  @@unique([competitionId, competitor1Id, round], map: "unique_competition_competitor1_round")
+  @@unique([competitionId, competitor2Id, round], map: "unique_competition_competitor2_round")
+}

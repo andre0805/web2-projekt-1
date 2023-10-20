@@ -1,0 +1,48 @@
+html
+    head
+        meta(charset='UTF-8')
+        meta(name='viewport', content='width=device-width, initial-scale=1.0')
+        title Home
+        style
+            include ../styles/index.css
+        
+    body
+        h1 Competitions webpage
+        
+        if user
+            h2 Hi, #{user.name}!
+        else
+            h2 Please login or signup to create a competition!
+        
+        nav
+            ul(class='navigation-menu')
+                if user
+                    li: a(href='/competitions') My competitions
+                    li: a(href='/logout') Logout
+                else
+                    li: a(href='/login') Login
+                    li: a(href='/signup') Signup
+      
+        if user
+            section(class='competition-form')
+                h3 Create a new competition
+                form(action="/competitions", method="post") 
+                    div
+                        label(for='competitionName') Competition name:
+                    div
+                        input(type='text', id='competitionName', name='competitionName', required)
+
+                    div
+                        label(for='competitors') Competitors (split using ';' or new line):
+                    div
+                        textarea(id='competitors', name='competitors', required)
+
+                    div 
+                        label(for='scoringSystem') Score system (win/draw/loss):
+                    div
+                        input(type='text', id='scoringSystem', name='scoringSystem', required)
+
+                    button(type='submit') Submit
+
+        if error
+            p #{error}

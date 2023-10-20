@@ -1,0 +1,10 @@
+html
+    head
+        title My competitions
+    body
+        h1 My competitions
+        ul
+            each competition in competitions
+                li
+                    a(href="/competitions/"+competition.id) #{competition.name}
+                    
