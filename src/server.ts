@@ -225,7 +225,9 @@ app.get('/competitions/:id', async (req, res) => {
         // sort matches by round
         matchesByRound.sort((a: Round, b: Round) => a.roundNumber - b.roundNumber);
 
-        res.render('competition', { user: req.oidc.user, competition, competitors, matchesByRound });
+        const competitionUrl = `${baseURL}/competitions/${competitionId}`;
+
+        res.render('competition', { user: req.oidc.user, competition, competitors, matchesByRound, competitionUrl });
     } catch (error) {
         console.error('Error fetching data:', error);
         res.status(500).json({ error: error.message || error });

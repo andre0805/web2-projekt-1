@@ -6,7 +6,7 @@ html
         
         if user && user.sub === competition.creatorUserId
             span Competitors can access this competition via this link: 
-            a(href="http://localhost:3000/competitions/#{competition.id}") http://localhost:3000/competitions/#{competition.id}
+            a(href=competitionUrl) #{competitionUrl}
         
         h3 Standings
         table 

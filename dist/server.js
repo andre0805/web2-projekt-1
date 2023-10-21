@@ -71,10 +71,9 @@ var middleware = __importStar(require("./middleware"));
 var Competitor_1 = require("./models/Competitor");
 var Match_1 = require("./models/Match");
 var Round_1 = require("./models/Round");
-var scheme = process.env.SCHEME || 'http';
 var host = process.env.HOST || 'localhost';
 var port = process.env.PORT || 3000;
-var baseURL = "".concat(scheme, "://").concat(host, ":").concat(port);
+var baseURL = host == 'localhost' ? "http://".concat(host, ":").concat(port) : "https://".concat(host);
 var app = (0, express_1.default)();
 var viewsPath = path_1.default.join(__dirname, 'views');
 app.set("views", viewsPath);
@@ -247,7 +246,7 @@ app.post('/competitions', (0, express_openid_connect_1.requiresAuth)(), middlewa
     });
 }); });
 app.get('/competitions/:id', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var competitionId, competition_2, competitors, matches, matchesByRound, _loop_1, _i, matches_2, match, error_3;
+    var competitionId, competition_2, competitors, matches, matchesByRound, _loop_1, _i, matches_2, match, competitionUrl, error_3;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -306,7 +305,8 @@ app.get('/competitions/:id', function (req, res) { return __awaiter(void 0, void
                 }
                 // sort matches by round
                 matchesByRound.sort(function (a, b) { return a.roundNumber - b.roundNumber; });
-                res.render('competition', { user: req.oidc.user, competition: competition_2, competitors: competitors, matchesByRound: matchesByRound });
+                competitionUrl = "".concat(baseURL, "/competitions/").concat(competitionId);
+                res.render('competition', { user: req.oidc.user, competition: competition_2, competitors: competitors, matchesByRound: matchesByRound, competitionUrl: competitionUrl });
                 return [3 /*break*/, 3];
             case 2:
                 error_3 = _a.sent();
