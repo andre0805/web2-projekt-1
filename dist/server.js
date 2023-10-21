@@ -74,7 +74,7 @@ var Round_1 = require("./models/Round");
 var host = process.env.HOST || 'localhost';
 var port = process.env.PORT || 3000;
 var app = (0, express_1.default)();
-var viewsPath = path_1.default.join(__dirname, './views');
+var viewsPath = path_1.default.join(__dirname, 'views');
 app.set("views", viewsPath);
 app.set("view engine", "pug");
 app.use(express_1.default.urlencoded({ extended: true }));

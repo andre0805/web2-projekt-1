@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.ts",
   "scripts": {
-    "build": "npm run clean && npx tsc && npx prisma generate && npm run copy-files",
+    "build": "npm run clean && npx tsc && npx prisma generate && npm run copy-files && echo \"Build complete!\"",
     "clean": "rm -rf dist",
     "copy-files": "mkdir -p dist/views && cp -r src/views/ dist/views/",
     "dev": "open -u http://localhost:3000 && nodemon src/server.ts",
