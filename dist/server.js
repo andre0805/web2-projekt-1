@@ -71,8 +71,7 @@ var middleware = __importStar(require("./middleware"));
 var Competitor_1 = require("./models/Competitor");
 var Match_1 = require("./models/Match");
 var Round_1 = require("./models/Round");
-var host = 'localhost';
-var port = 3000;
+var port = process.env.PORT || 3000;
 var app = (0, express_1.default)();
 app.set("views", path_1.default.join(__dirname, "views"));
 app.set("view engine", "pug");
@@ -83,7 +82,7 @@ var config = {
     authRequired: false,
     auth0Logout: true,
     secret: process.env.SECRET,
-    baseURL: "http://".concat(host, ":").concat(port),
+    baseURL: "http://localhost:".concat(port),
     clientID: process.env.CLIENT_ID,
     issuerBaseURL: 'https://dev-gzizuvkh2i7yo8yr.us.auth0.com',
     clientSecret: process.env.CLIENT_SECRET,
@@ -365,6 +364,6 @@ app.get("/signup", function (req, res) {
         },
     });
 });
-app.listen(port, host, function () {
-    console.log("Server started at http://".concat(host, ":").concat(port));
+app.listen(port, function () {
+    console.log("Listening on port ".concat(port));
 });
