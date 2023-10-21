@@ -71,6 +71,7 @@ var middleware = __importStar(require("./middleware"));
 var Competitor_1 = require("./models/Competitor");
 var Match_1 = require("./models/Match");
 var Round_1 = require("./models/Round");
+var host = process.env.HOST || 'localhost';
 var port = process.env.PORT || 3000;
 var app = (0, express_1.default)();
 app.set("views", path_1.default.join(__dirname, "views"));
@@ -82,7 +83,7 @@ var config = {
     authRequired: false,
     auth0Logout: true,
     secret: process.env.SECRET,
-    baseURL: "http://localhost:".concat(port),
+    baseURL: "http://".concat(host, ":").concat(port),
     clientID: process.env.CLIENT_ID,
     issuerBaseURL: 'https://dev-gzizuvkh2i7yo8yr.us.auth0.com',
     clientSecret: process.env.CLIENT_SECRET,
@@ -365,5 +366,5 @@ app.get("/signup", function (req, res) {
     });
 });
 app.listen(port, function () {
-    console.log("Listening on port ".concat(port));
+    console.log("Listening at https://".concat(host, ":").concat(port));
 });
