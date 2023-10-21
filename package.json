@@ -12,6 +12,9 @@
   },
   "author": "",
   "license": "ISC",
+  "engines": {
+    "node": "18.x"
+  },
   "dependencies": {
     "@prisma/client": "^5.4.2",
     "dotenv": "^16.3.1",
