@@ -7,7 +7,7 @@
     "build": "npm run clean && npx tsc && npm run copy-files",
     "clean": "rm -rf dist",
     "copy-files": "mkdir -p dist/views && cp -r src/views/ dist/views",
-    "start": "open -u http://localhost:3000 && nodemon src/server.ts"
+    "start": "nodemon src/server.ts"
   },
   "author": "",
   "license": "ISC",
