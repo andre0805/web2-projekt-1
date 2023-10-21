@@ -25,7 +25,7 @@ const config = {
     authRequired: false,
     auth0Logout: true,
     secret: process.env.SECRET,
-    baseURL: `http://${host}:${port}`,
+    baseURL: `https://${host}:${port}`,
     clientID: process.env.CLIENT_ID,
     issuerBaseURL: 'https://dev-gzizuvkh2i7yo8yr.us.auth0.com',
     clientSecret: process.env.CLIENT_SECRET,
