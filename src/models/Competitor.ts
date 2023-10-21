@@ -6,6 +6,7 @@ class Competitor {
     draws: number;
     losses: number;
 
+    matchesPlayed: number = 0;
     totalPoints: number = 0;
 
     constructor(id: number, name: string, competitionId: number, wins: number, draws: number, losses: number) {

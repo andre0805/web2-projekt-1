@@ -5,6 +5,10 @@ html
             include ../styles/index.css
         
     body
+        if user
+            nav 
+                a(href="/logout") Logout
+
         h1 Competitions webpage
         
         if user
@@ -12,14 +16,12 @@ html
         else
             h2 Please login or signup to create a competition!
         
-        nav
-            ul(class='navigation-menu')
-                if user
-                    li: a(href='/competitions') My competitions
-                    li: a(href='/logout') Logout
-                else
-                    li: a(href='/login') Login
-                    li: a(href='/signup') Signup
+        ul(class='navigation-menu')
+            if user
+                li: a(href='/competitions') My competitions
+            else
+                li: a(href='/login') Login
+                li: a(href='/signup') Signup
       
         if user
             section(class='competition-form')

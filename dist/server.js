@@ -285,6 +285,7 @@ app.get('/competitions/:id', function (req, res) { return __awaiter(void 0, void
                     competitor.totalPoints = competitor.wins * competition_2.winPoints
                         + competitor.draws * competition_2.drawPoints
                         + competitor.losses * competition_2.lossPoints;
+                    competitor.matchesPlayed = competitor.wins + competitor.draws + competitor.losses;
                     return competitor;
                 })
                     .sort(function (a, b) { return b.totalPoints - a.totalPoints; });
@@ -324,8 +325,8 @@ app.post('/matches/:matchId', (0, express_openid_connect_1.requiresAuth)(), midd
             case 0:
                 _a.trys.push([0, 3, , 4]);
                 matchId = parseInt(req.params.matchId);
-                score1 = parseInt(req.body.score1);
-                score2 = parseInt(req.body.score2);
+                score1 = parseInt(req.body.score1) || null;
+                score2 = parseInt(req.body.score2) || null;
                 return [4 /*yield*/, prisma.matches.findUnique({
                         where: {
                             id: matchId,
@@ -333,10 +334,6 @@ app.post('/matches/:matchId', (0, express_openid_connect_1.requiresAuth)(), midd
                     })];
             case 1:
                 match = _a.sent();
-                if (match == null || match == undefined) {
-                    res.status(404).send('Match not found');
-                    return [2 /*return*/];
-                }
                 return [4 /*yield*/, prisma.matches.update({
                         where: {
                             id: matchId,

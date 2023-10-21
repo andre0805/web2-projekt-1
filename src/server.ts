@@ -203,6 +203,7 @@ app.get('/competitions/:id', async (req, res) => {
                                                             competitor.totalPoints = competitor.wins * competition.winPoints
                                                                 + competitor.draws * competition.drawPoints
                                                                 + competitor.losses * competition.lossPoints;
+                                                            competitor.matchesPlayed = competitor.wins + competitor.draws + competitor.losses;
                                                             return competitor;
                                                         })
                                                         .sort((a: Competitor, b: Competitor) => b.totalPoints - a.totalPoints);
@@ -237,19 +238,14 @@ app.get('/competitions/:id', async (req, res) => {
 app.post('/matches/:matchId', requiresAuth(), middleware.validateMatchData, async (req, res) => {
     try {
         const matchId = parseInt(req.params.matchId);
-        const score1 = parseInt(req.body.score1);
-        const score2 = parseInt(req.body.score2);
+        const score1 = parseInt(req.body.score1) || null;
+        const score2 = parseInt(req.body.score2) || null;
 
         const match = await prisma.matches.findUnique({
             where: {
                 id: matchId,
             }
         });
-
-        if (match == null || match == undefined) {
-            res.status(404).send('Match not found');
-            return;
-        }
 
         await prisma.matches.update({
             where: {
@@ -261,7 +257,7 @@ app.post('/matches/:matchId', requiresAuth(), middleware.validateMatchData, asyn
             }
         });
 
-        res.redirect(`/competitions/${match.competitionId}`);
+        res.redirect(`/competitions/${match!.competitionId}`);
     } catch (error) {
         console.error('Error inserting data:', error);
         res.status(500).json({ error: error.message || error });

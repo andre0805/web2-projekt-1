@@ -40,26 +40,16 @@ const validateCompetitionData = (req: Request, res: Response, next: NextFunction
 }
 
 const validateMatchData = async (req: Request, res: Response, next: NextFunction) => {
-    const score1 = parseFloat(req.body.score1);
-    const score2 = parseFloat(req.body.score2);
+    const matchId = parseInt(req.params.matchId);
     
     const match = await prisma.matches.findUnique({
         where: {
-            id: parseInt(req.params.matchId)
+            id: matchId
         }
     });
 
     if (match === null) {
         res.status(404).send('Match not found');
-        return;
-    }
-
-    if (
-        typeof score1 !== 'number' || typeof score2 !== 'number' ||
-        typeof score1 === 'undefined' || typeof score2 === 'undefined' ||
-        isNaN(score1) || isNaN(score2)
-    ) {
-        res.status(400).redirect('/competitions/' + match.competitionId);
         return;
     }
 

@@ -73,27 +73,20 @@ var validateCompetitionData = function (req, res, next) {
 };
 exports.validateCompetitionData = validateCompetitionData;
 var validateMatchData = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var score1, score2, match;
+    var matchId, match;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                score1 = parseFloat(req.body.score1);
-                score2 = parseFloat(req.body.score2);
+                matchId = parseInt(req.params.matchId);
                 return [4 /*yield*/, prisma.matches.findUnique({
                         where: {
-                            id: parseInt(req.params.matchId)
+                            id: matchId
                         }
                     })];
             case 1:
                 match = _a.sent();
                 if (match === null) {
                     res.status(404).send('Match not found');
-                    return [2 /*return*/];
-                }
-                if (typeof score1 !== 'number' || typeof score2 !== 'number' ||
-                    typeof score1 === 'undefined' || typeof score2 === 'undefined' ||
-                    isNaN(score1) || isNaN(score2)) {
-                    res.status(400).redirect('/competitions/' + match.competitionId);
                     return [2 /*return*/];
                 }
                 next();

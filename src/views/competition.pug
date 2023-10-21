@@ -5,6 +5,10 @@ html
             include ../styles/competition.css
         
     body
+        nav 
+            a(href="/competitions") << My competitions
+            a(href="/logout") Logout
+
         h1 #{competition.name}
         
         if user && user.sub === competition.creatorUserId
@@ -17,6 +21,7 @@ html
             thead
                 tr
                     th Competitor
+                    th Played
                     th Wins (#{competition.winPoints})
                     th Draws (#{competition.drawPoints})
                     th Losses (#{competition.lossPoints})
@@ -25,6 +30,7 @@ html
                 each competitor in competitors
                     tr
                         td #{competitor.name}
+                        td #{competitor.matchesPlayed}
                         td #{competitor.wins}
                         td #{competitor.draws}
                         td #{competitor.losses}
@@ -50,7 +56,7 @@ html
                                             p Enter score:
                                         
                                         form(action="/matches/"+match.id, method="post")
-                                            input(type='number', id='score1', name='score1', value=match.score1, required)
+                                            input(type='number', id='score1', name='score1', value=match.score1)
                                             label -
-                                            input(type='number', id='score2', name='score2', value=match.score2, required)
+                                            input(type='number', id='score2', name='score2', value=match.score2)
                                             button(type='submit') Submit

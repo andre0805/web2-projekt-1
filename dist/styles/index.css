@@ -12,6 +12,14 @@ body {
   padding: 20px;
 }
 
+nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
 /* Center the h1 */
 h1 {
   text-align: center;
@@ -36,11 +44,6 @@ h2 {
 
 .navigation-menu li {
   margin: 0 10px;
-}
-
-.navigation-menu a {
-  text-decoration: none;
-  color: #333;
 }
 
 /* Style for the competition form */
@@ -99,4 +102,14 @@ p.error-message {
   color: #ff0000;
   text-align: center;
   margin: 20px 0;
+}
+
+/* Style for links */
+a {
+  text-decoration: none;
+  color: #007bff;
+}
+
+a:hover {
+  text-decoration: underline;
 }

@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Competitor = void 0;
 var Competitor = /** @class */ (function () {
     function Competitor(id, name, competitionId, wins, draws, losses) {
+        this.matchesPlayed = 0;
         this.totalPoints = 0;
         this.id = id;
         this.name = name;
