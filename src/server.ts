@@ -13,7 +13,8 @@ const host = process.env.HOST || 'localhost';
 const port = process.env.PORT || 3000;
 
 const app = express();
-app.set("views", path.join(__dirname, "views"));
+const viewsPath = path.join(__dirname, 'views');
+app.set("views", viewsPath);
 app.set("view engine", "pug");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('styles'));
@@ -276,5 +277,6 @@ app.get("/signup", (req, res) => {
 });
 
 app.listen(port, () => {
+    console.log("viewsPath: " + viewsPath);
     console.log(`Listening at https://${host}:${port}`);
 });

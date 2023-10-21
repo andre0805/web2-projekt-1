@@ -74,7 +74,8 @@ var Round_1 = require("./models/Round");
 var host = process.env.HOST || 'localhost';
 var port = process.env.PORT || 3000;
 var app = (0, express_1.default)();
-app.set("views", path_1.default.join(__dirname, "views"));
+var viewsPath = path_1.default.join(__dirname, './views');
+app.set("views", viewsPath);
 app.set("view engine", "pug");
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use(express_1.default.static('styles'));
@@ -366,5 +367,6 @@ app.get("/signup", function (req, res) {
     });
 });
 app.listen(port, function () {
+    console.log("viewsPath: " + viewsPath);
     console.log("Listening at https://".concat(host, ":").concat(port));
 });
