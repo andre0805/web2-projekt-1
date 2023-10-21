@@ -97,21 +97,39 @@ var prisma = new client_1.PrismaClient();
 app.use((0, express_openid_connect_1.auth)(config));
 // req.isAuthenticated is provided from the auth router
 app.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        try {
+            if (req.oidc.isAuthenticated()) {
+                res.render('index', { user: req.oidc.user });
+            }
+            else {
+                res.render('index', { user: null });
+            }
+        }
+        catch (error) {
+            console.error('Error fetching data:', error);
+            res.status(500).json({ error: error.message || error });
+        }
+        return [2 /*return*/];
+    });
+}); });
+app.get('/competitions', (0, express_openid_connect_1.requiresAuth)(), function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var competitions, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, prisma.competitions.findMany()];
+                return [4 /*yield*/, prisma.competitions.findMany({
+                        orderBy: {
+                            name: 'asc',
+                        },
+                        where: {
+                            creatorUserId: req.oidc.user.sub,
+                        }
+                    })];
             case 1:
                 competitions = _a.sent();
-                console.log("data: ".concat(JSON.stringify(competitions), "}"));
-                if (req.oidc.isAuthenticated()) {
-                    res.render('index', { user: req.oidc.user });
-                }
-                else {
-                    res.render('index', { user: null });
-                }
+                res.render('competitions', { user: req.oidc.user, competitions: competitions });
                 return [3 /*break*/, 3];
             case 2:
                 error_1 = _a.sent();
@@ -149,7 +167,7 @@ app.post('/competitions', (0, express_openid_connect_1.requiresAuth)(), middlewa
                     .replaceAll('\r', ';')
                     .split(';')
                     .filter(function (competitor) { return competitor.trim().length > 0; })
-                    .map(function (competitor, i) { return new Competitor_1.Competitor(i, competitor.trim(), competition_1.id); });
+                    .map(function (competitor, i) { return new Competitor_1.Competitor(i, competitor.trim(), competition_1.id, 0, 0, 0); });
                 _i = 0, competitors_1 = competitors;
                 _b.label = 2;
             case 2:
@@ -171,7 +189,7 @@ app.post('/competitions', (0, express_openid_connect_1.requiresAuth)(), middlewa
             case 5:
                 dummyId = -1;
                 if (competitors.length % 2 == 1) {
-                    dummyCompetitor = new Competitor_1.Competitor(dummyId, 'Dummy', competition_1.id);
+                    dummyCompetitor = new Competitor_1.Competitor(dummyId, 'Dummy', competition_1.id, 0, 0, 0);
                     competitors.push(dummyCompetitor);
                 }
                 competitorsCount = competitors.length;
@@ -226,7 +244,7 @@ app.post('/competitions', (0, express_openid_connect_1.requiresAuth)(), middlewa
     });
 }); });
 app.get('/competitions/:id', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var competitionId, competition, competitors, matches, matchesByRound, _loop_1, _i, matches_2, match, error_3;
+    var competitionId, competition_2, competitors, matches, matchesByRound, _loop_1, _i, matches_2, match, error_3;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -234,26 +252,47 @@ app.get('/competitions/:id', function (req, res) { return __awaiter(void 0, void
                 competitionId = parseInt(req.params.id);
                 return [4 /*yield*/, prisma.competitions.findUnique({
                         include: {
-                            competitors: true,
-                            matches: true,
+                            competitors: {
+                                orderBy: {
+                                    name: 'asc',
+                                }
+                            },
+                            matches: {
+                                orderBy: [
+                                    {
+                                        round: 'asc',
+                                    },
+                                    {
+                                        id: 'asc',
+                                    }
+                                ]
+                            }
                         },
                         where: {
                             id: competitionId,
-                        }
+                        },
                     })];
             case 1:
-                competition = _a.sent();
-                if (competition == null) {
+                competition_2 = _a.sent();
+                if (competition_2 == null) {
                     res.status(404).send('Competition not found');
                     return [2 /*return*/];
                 }
-                competitors = competition.competitors;
-                matches = competition.matches;
+                competitors = competition_2.competitors
+                    .map(function (competitor) {
+                    competitor.totalPoints = competitor.wins * competition_2.winPoints
+                        + competitor.draws * competition_2.drawPoints
+                        + competitor.losses * competition_2.lossPoints;
+                    return competitor;
+                })
+                    .sort(function (a, b) { return b.totalPoints - a.totalPoints; });
+                matches = competition_2.matches;
                 matchesByRound = [];
                 _loop_1 = function (match) {
                     if (matchesByRound[match.round - 1] == null) {
                         matchesByRound[match.round - 1] = new Round_1.Round(match.round, []);
                     }
+                    // add competitors to matches
                     match.competitor1 = competitors.find(function (competitor) { return competitor.id == match.competitor1Id; });
                     match.competitor2 = competitors.find(function (competitor) { return competitor.id == match.competitor2Id; });
                     matchesByRound[match.round - 1].matches.push(match);
@@ -262,8 +301,9 @@ app.get('/competitions/:id', function (req, res) { return __awaiter(void 0, void
                     match = matches_2[_i];
                     _loop_1(match);
                 }
-                console.log("data: ".concat(JSON.stringify(matchesByRound), "}"));
-                res.render('competition', { user: req.oidc.user, competition: competition, competitors: competitors, matchesByRound: matchesByRound });
+                // sort matches by round
+                matchesByRound.sort(function (a, b) { return a.roundNumber - b.roundNumber; });
+                res.render('competition', { user: req.oidc.user, competition: competition_2, competitors: competitors, matchesByRound: matchesByRound });
                 return [3 /*break*/, 3];
             case 2:
                 error_3 = _a.sent();
@@ -290,7 +330,8 @@ app.post('/matches/:matchId', (0, express_openid_connect_1.requiresAuth)(), midd
                     })];
             case 1:
                 match = _a.sent();
-                if (match == null) {
+                console.log("match: ".concat(JSON.stringify(match)));
+                if (match == null || match == undefined) {
                     res.status(404).send('Match not found');
                     return [2 /*return*/];
                 }
@@ -316,9 +357,6 @@ app.post('/matches/:matchId', (0, express_openid_connect_1.requiresAuth)(), midd
         }
     });
 }); });
-app.get('/profile', (0, express_openid_connect_1.requiresAuth)(), function (req, res) {
-    res.send(JSON.stringify(req.oidc.user));
-});
 app.get("/signup", function (req, res) {
     res.oidc.login({
         returnTo: '/',

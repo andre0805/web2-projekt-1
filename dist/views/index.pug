@@ -16,9 +16,8 @@ html
         
         nav
             ul(class='navigation-menu')
-                li: a(href='/', title='Home') Home
                 if user
-                    li: a(href='/profile') Profile
+                    li: a(href='/competitions') My competitions
                     li: a(href='/logout') Logout
                 else
                     li: a(href='/login') Login

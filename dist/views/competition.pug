@@ -3,10 +3,28 @@ html
         title #{competition.name}
     body
         h1 #{competition.name}
-        h3 Competitors
-        ul
-            each competitor in competitors
-                li #{competitor.name}
+        
+        if user && user.sub === competition.creatorUserId
+            span Competitors can access this competition via this link: 
+            a(href="http://localhost:3000/competitions/#{competition.id}") http://localhost:3000/competitions/#{competition.id}
+        
+        h3 Standings
+        table 
+            thead
+                tr
+                    th Competitor
+                    th Wins (#{competition.winPoints})
+                    th Draws (#{competition.drawPoints})
+                    th Losses (#{competition.lossPoints})
+                    th Total points
+            tbody
+                each competitor in competitors
+                    tr
+                        td #{competitor.name}
+                        td #{competitor.wins}
+                        td #{competitor.draws}
+                        td #{competitor.losses}
+                        td #{competitor.totalPoints}
 
         h3 Matches
         ul 
@@ -15,15 +33,16 @@ html
                     ul
                         each match in round.matches
                             li #{match.competitor1.name} vs #{match.competitor2.name} 
-                                if match.scor1 != null && match.score2 != null
+                                if match.score1 != null && match.score2 != null
                                     | (#{match.score1} - #{match.score2})
                                 else
                                     | (not played yet)
-                                    if user.sub === competition.creatorUserId
-                                        p Enter score:
-                                        form(action="/matches/#{match.id}", method="post")
-                                            label(for='score1')
-                                            input(type='number', id='score1', name='score1', required)
-                                            label(for='score2')
-                                            input(type='number', id='score2', name='score2', required)
-                                            button(type='submit') Submit
+                                
+                                if user && user.sub === competition.creatorUserId
+                                    p Enter score:
+                                    form(action="/matches/"+match.id, method="post")
+                                        label(for='score1')
+                                        input(type='number', id='score1', name='score1', required)
+                                        label(for='score2')
+                                        input(type='number', id='score2', name='score2', required)
+                                        button(type='submit') Submit
