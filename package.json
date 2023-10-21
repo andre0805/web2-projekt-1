@@ -4,10 +4,11 @@
   "description": "",
   "main": "server.ts",
   "scripts": {
-    "build": "npm run clean && npx tsc && npm run copy-files",
+    "build": "npm run clean && tsc && npm run copy-files",
     "clean": "rm -rf dist",
     "copy-files": "mkdir -p dist/views && cp -r src/views/ dist/views",
-    "start": "nodemon src/server.ts"
+    "dev": "open -u http://localhost:3000 && nodemon src/server.ts",
+    "start": "node dist/server.js"
   },
   "author": "",
   "license": "ISC",
