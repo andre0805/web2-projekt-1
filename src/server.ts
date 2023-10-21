@@ -276,5 +276,5 @@ app.get("/signup", (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Listening at http://${host}:${port}`);
+    console.log(`Listening at https://${host}:${port}`);
 });
