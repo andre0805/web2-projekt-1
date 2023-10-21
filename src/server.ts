@@ -9,10 +9,9 @@ import { Competitor } from './models/Competitor';
 import { Match } from './models/Match';
 import { Round } from './models/Round';
 
-const scheme = process.env.SCHEME || 'http';
 const host = process.env.HOST || 'localhost';
 const port = process.env.PORT || 3000;
-const baseURL = `${scheme}://${host}:${port}`;
+const baseURL = host == 'localhost' ? `http://${host}:${port}` : `https://${host}`;
 
 const app = express();
 const viewsPath = path.join(__dirname, 'views');
