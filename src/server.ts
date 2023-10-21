@@ -277,6 +277,6 @@ app.get("/signup", (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log("viewsPath: " + viewsPath);
+    console.log(config.baseURL)
     console.log(`Listening at https://${host}:${port}`);
 });

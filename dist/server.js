@@ -84,7 +84,7 @@ var config = {
     authRequired: false,
     auth0Logout: true,
     secret: process.env.SECRET,
-    baseURL: "http://".concat(host, ":").concat(port),
+    baseURL: "https://".concat(host, ":").concat(port),
     clientID: process.env.CLIENT_ID,
     issuerBaseURL: 'https://dev-gzizuvkh2i7yo8yr.us.auth0.com',
     clientSecret: process.env.CLIENT_SECRET,
@@ -367,6 +367,6 @@ app.get("/signup", function (req, res) {
     });
 });
 app.listen(port, function () {
-    console.log("viewsPath: " + viewsPath);
+    console.log(config.baseURL);
     console.log("Listening at https://".concat(host, ":").concat(port));
 });
