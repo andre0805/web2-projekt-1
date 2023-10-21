@@ -333,7 +333,6 @@ app.post('/matches/:matchId', (0, express_openid_connect_1.requiresAuth)(), midd
                     })];
             case 1:
                 match = _a.sent();
-                console.log("match: ".concat(JSON.stringify(match)));
                 if (match == null || match == undefined) {
                     res.status(404).send('Match not found');
                     return [2 /*return*/];
