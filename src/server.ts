@@ -3,13 +3,11 @@ import { auth, requiresAuth } from 'express-openid-connect';
 import path from 'path';
 import dotenv from 'dotenv'
 import { PrismaClient } from '@prisma/client';
-import { db } from './db';
 import * as middleware from './middleware'
 import { Competition } from './models/Competition';
 import { Competitor } from './models/Competitor';
 import { Match } from './models/Match';
 import { Round } from './models/Round';
-import e from 'express';
 
 const host = 'localhost';
 const port = 3000;
@@ -58,7 +56,7 @@ app.get('/', async (req, res) => {
 
 app.get('/competitions', requiresAuth(), async (req, res) => {
     try {
-        const competitions = await prisma.competitions.findMany({
+        const competitions: Competition[] = await prisma.competitions.findMany({
             orderBy: {
                 name: 'asc',
             },
@@ -83,7 +81,7 @@ app.post('/competitions', requiresAuth(), middleware.validateCompetitionData, as
         const lossPoints: number = scoringSystem[2];
         
         // Create a new competition        
-        const competition = await prisma.competitions.create({
+        const competition: Competition = await prisma.competitions.create({
             data: {
                 name: competitionName,
                 creatorUserId: req.oidc.user!.sub,
