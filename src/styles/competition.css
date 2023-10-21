@@ -1,0 +1,122 @@
+/* Reset some default styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+/* Set a background color for the body */
+body {
+  background-color: #f0f0f0;
+  padding: 20px;
+}
+
+/* Center the h1 */
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+/* Style for the competition details */
+h3 {
+  color: #333;
+  margin-top: 40px;
+}
+
+div.competition-link {
+  margin-top: 40px;
+}
+
+/* Style for links */
+a {
+  text-decoration: none;
+  color: #007bff;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Style for the standings table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+table, th, td {
+  border: 1px solid #ddd;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background-color: #f6f6f6;
+}
+
+/* Style for the rounds list */
+ul.rounds {
+    list-style: square;
+    margin: 10px 20px;
+}
+
+li.round {
+    margin: 15px 0;
+    color: #333;
+    font-weight: 600;
+}
+
+/* Style for matches */
+ul.matches {
+  list-style: square;
+  margin: 10px 40px;
+}
+
+li.match {
+  margin: 5px 0;
+}
+
+/* Style for match score form */
+div.enter-score {
+  margin: 10px 0;
+  padding: 5px 0;
+  font-size: 14px;
+  font-weight: 400;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+div.enter-score form {
+    margin: 0 10px;
+}
+
+div.enter-score form input[type="number"] {
+  width: 60px;
+  margin: 0 5px;
+  padding: 4px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  box-shadow: 2px 2px 5px #eee;
+}
+
+button[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+  margin-left: 5px;
+    padding: 5px 10px;
+
+    font-weight: 600;
+    font-size: x-small;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}

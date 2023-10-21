@@ -1,6 +1,8 @@
 html
     head
         title Home
+        style 
+            include ../styles/index.css
         
     body
         h1 Competitions webpage
@@ -23,22 +25,11 @@ html
             section(class='competition-form')
                 h3 Create a new competition
                 form(action="/competitions", method="post") 
-                    div
-                        label(for='competitionName') Competition name:
-                    div
-                        input(type='text', id='competitionName', name='competitionName', required)
-
-                    div
-                        label(for='competitors') Competitors (split using ';' or new line):
-                    div
-                        textarea(id='competitors', name='competitors', required)
-
-                    div 
-                        label(for='scoringSystem') Scoring system (win/draw/loss):
-                    div
-                        input(type='text', id='scoringSystem', name='scoringSystem', required)
-
-                    button(type='submit') Submit
+                    input(type='text', id='competitionName', placeholder='Competition name', name='competitionName', required)
+                    textarea(id='competitors', placeholder='Competitors (split using \';\' or new line)', name='competitors', required)
+                    input(type='text', id='scoringSystem', placeholder='Scoring system (win/draw/loss)', name='scoringSystem', required)
+                    div.submit-button
+                        button(type='submit') SUBMIT
 
         if error
-            p #{error}
+            p.error-message #{error}
