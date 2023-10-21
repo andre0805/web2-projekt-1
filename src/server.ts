@@ -246,8 +246,6 @@ app.post('/matches/:matchId', requiresAuth(), middleware.validateMatchData, asyn
             }
         });
 
-        console.log(`match: ${JSON.stringify(match)}`);
-
         if (match == null || match == undefined) {
             res.status(404).send('Match not found');
             return;
