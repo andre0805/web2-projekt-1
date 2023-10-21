@@ -5,12 +5,15 @@ html
             include ../styles/competition.css
         
     body
-        if user
-            nav 
+        nav 
+            if user
                 a(href="/competitions") << My competitions
                 div.user-info
                     p #{user.name}
                     a(href="/logout") Logout
+            else 
+                div.login
+                    a(href="/login") Login
 
         h1 #{competition.name}
         
@@ -19,15 +22,21 @@ html
                 span Competitors can access this competition via this link: 
                 a(href=competitionUrl) #{competitionUrl}
         
+        h3 Scoring system
+        ul.scoring-system
+            li Win points: #{competition.winPoints}
+            li Draw points: #{competition.drawPoints}
+            li Loss points: #{competition.lossPoints}
+
         h3 Standings
         table 
             thead
                 tr
                     th Competitor
                     th Played
-                    th Wins (#{competition.winPoints})
-                    th Draws (#{competition.drawPoints})
-                    th Losses (#{competition.lossPoints})
+                    th Wins
+                    th Draws
+                    th Losses
                     th Total points
             tbody
                 each competitor in competitors
@@ -42,10 +51,10 @@ html
         h3 Matches
         ul.rounds
             each round in matchesByRound
-                li.round Round #{round.roundNumber} 
+                li Round #{round.roundNumber} 
                     ul.matches
                         each match in round.matches
-                            li.match #{match.competitor1.name} vs #{match.competitor2.name} 
+                            li #{match.competitor1.name} vs #{match.competitor2.name} 
                                 if match.score1 != null && match.score2 != null
                                     | (#{match.score1} - #{match.score2})
                                 else
@@ -62,4 +71,4 @@ html
                                             input(type='number', id='score1', name='score1', value=match.score1)
                                             label -
                                             input(type='number', id='score2', name='score2', value=match.score2)
-                                            button(type='submit') Submit
+                                            button(type='submit') SUBMIT

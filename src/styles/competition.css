@@ -31,6 +31,13 @@ div.user-info p {
     padding: 4px 0;
 }
 
+div.login {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
 /* Center the h1 */
 h1 {
   text-align: center;
@@ -61,7 +68,7 @@ a:hover {
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 table, th, td {
@@ -74,16 +81,30 @@ th, td {
 }
 
 th {
-  background-color: #f6f6f6;
+  background-color: #f5f5f5;
+}
+
+tr:hover {
+  background-color: #f5f5f5;
+}
+
+/* Style for the scoring system */
+ul.scoring-system {
+  list-style: square;
+  margin: 15px 40px;
+}
+
+ul.scoring-system li {
+  margin: 10px 0;
 }
 
 /* Style for the rounds list */
 ul.rounds {
     list-style: square;
-    margin: 10px 20px;
+    margin: 10px 40px;
 }
 
-li.round {
+ul.rounds li {
     margin: 15px 0;
     color: #333;
     font-weight: 600;
@@ -91,11 +112,11 @@ li.round {
 
 /* Style for matches */
 ul.matches {
-  list-style: square;
+  list-style: disc;
   margin: 10px 40px;
 }
 
-li.match {
+ul.matches li {
   margin: 5px 0;
 }
 
@@ -115,12 +136,13 @@ div.enter-score form {
 }
 
 div.enter-score form input[type="number"] {
-  width: 60px;
+  width: 30px;
   margin: 0 5px;
   padding: 4px;
   border: 1px solid #ccc;
   border-radius: 3px;
   box-shadow: 2px 2px 5px #eee;
+  text-align: center;
 }
 
 button[type="submit"] {
@@ -133,9 +155,13 @@ button[type="submit"] {
     padding: 5px 10px;
 
     font-weight: 600;
-    font-size: x-small;
+    font-size: xx-small;
 }
 
 button[type="submit"]:hover {
   background-color: #0056b3;
+}
+
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
 }

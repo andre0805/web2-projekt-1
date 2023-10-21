@@ -48,8 +48,13 @@ ul {
 
 li {
     width: 80%;
-  padding: 10px 20px;
-  margin: 5px 0;
+}
+
+li a {
+    display: block;
+    margin: 8px 0;
+    padding: 10px 20px;
+
   background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -57,7 +62,7 @@ li {
   font-size: 16px
 }
 
-li:hover {
+li a:hover {
     box-shadow: 2px 2px 5px #ddd;
     background-color: #f0f0f0;
 }

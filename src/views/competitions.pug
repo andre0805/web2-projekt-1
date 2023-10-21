@@ -5,12 +5,14 @@ html
             include ../styles/competitions.css
         
     body
-        if user
-            nav 
+        nav 
+            if user
                 a(href="/") << Home
                 div.user-info
                     p #{user.name}
                     a(href="/logout") Logout
+            else 
+                a(href="/login") Login
 
         h1 My competitions
         ul
