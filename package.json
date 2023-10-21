@@ -4,12 +4,11 @@
   "description": "",
   "main": "server.ts",
   "scripts": {
-    "build": "npm run clean && npx tsc && npx prisma generate && npm run copy-files && echo \"Build complete!\" && npm run files",
+    "build": "npm run clean && npx tsc && npx prisma generate && npm run copy-files && echo \"Build complete!\"",
     "clean": "rm -rf dist",
     "copy-files": "mkdir -p dist/ && cp -r src/views/ dist/views/",
     "dev": "open -u http://localhost:3000 && nodemon src/server.ts",
-    "start": "node dist/server.js",
-    "files": "find . | sed -e \"s/[^-][^\\/]*\\//  |/g\" -e \"s/|\\([^ ]\\)/|-\\1/\""
+    "start": "node dist/server.js"
   },
   "author": "",
   "license": "ISC",
