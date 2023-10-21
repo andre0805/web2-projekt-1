@@ -9,6 +9,7 @@ import { Competitor } from './models/Competitor';
 import { Match } from './models/Match';
 import { Round } from './models/Round';
 
+const host = process.env.HOST || 'localhost';
 const port = process.env.PORT || 3000;
 
 const app = express();
@@ -23,7 +24,7 @@ const config = {
     authRequired: false,
     auth0Logout: true,
     secret: process.env.SECRET,
-    baseURL: `http://localhost:${port}`,
+    baseURL: `http://${host}:${port}`,
     clientID: process.env.CLIENT_ID,
     issuerBaseURL: 'https://dev-gzizuvkh2i7yo8yr.us.auth0.com',
     clientSecret: process.env.CLIENT_SECRET,
@@ -275,5 +276,5 @@ app.get("/signup", (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Listening on port ${port}`);
+    console.log(`Listening at http://${host}:${port}`);
 });
