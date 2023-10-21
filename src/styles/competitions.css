@@ -16,8 +16,19 @@ nav {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  align-items: first baseline;
   margin-bottom: 20px;
+}
+
+div.user-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+div.user-info p {
+    padding: 4px 0;
 }
 
 /* Center the h1 */

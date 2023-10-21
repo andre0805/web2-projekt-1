@@ -5,9 +5,12 @@ html
             include ../styles/competitions.css
         
     body
-        nav 
-            a(href="/") << Home
-            a(href="/logout") Logout
+        if user
+            nav 
+                a(href="/") << Home
+                div.user-info
+                    p #{user.name}
+                    a(href="/logout") Logout
 
         h1 My competitions
         ul

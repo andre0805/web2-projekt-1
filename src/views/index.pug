@@ -7,13 +7,13 @@ html
     body
         if user
             nav 
-                a(href="/logout") Logout
+                div.user-info
+                    p #{user.name}
+                    a(href="/logout") Logout
 
         h1 Competitions webpage
         
-        if user
-            h2 Hi, #{user.name}!
-        else
+        if !user
             h2 Please login or signup to create a competition!
         
         ul(class='navigation-menu')

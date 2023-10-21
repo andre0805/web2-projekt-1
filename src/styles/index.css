@@ -33,6 +33,17 @@ h2 {
   margin: 20px 0;
 }
 
+div.user-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+div.user-info p {
+    padding: 4px 0;
+}
+
 /* Style for the navigation menu */
 .navigation-menu {
   list-style: none;
