@@ -268,7 +268,7 @@ app.get("/signup", (req, res) => {
     res.oidc.login({
         returnTo: '/',
         authorizationParams: {      
-        screen_hint: "signup",
+            screen_hint: "signup",
         },
     });
 });
