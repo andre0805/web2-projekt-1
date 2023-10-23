@@ -53,6 +53,14 @@ const validateMatchData = async (req: Request, res: Response, next: NextFunction
         return;
     }
 
+    const score1 = parseInt(req.body.score1);
+    const score2 = parseInt(req.body.score2);
+
+    if (isNaN(score1) && !isNaN(score2) || !isNaN(score1) && isNaN(score2)) {
+        res.status(400).send('Invalid score');
+        return;
+    }
+
     next();
 }
 

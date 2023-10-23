@@ -238,8 +238,8 @@ app.get('/competitions/:id', async (req, res) => {
 app.post('/matches/:matchId', requiresAuth(), middleware.validateMatchData, async (req, res) => {
     try {
         const matchId = parseInt(req.params.matchId);
-        const score1 = parseInt(req.body.score1) || null;
-        const score2 = parseInt(req.body.score2) || null;
+        const score1 = parseInt(req.body.score1);
+        const score2 = parseInt(req.body.score2);
 
         const match = await prisma.matches.findUnique({
             where: {
