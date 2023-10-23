@@ -235,6 +235,38 @@ app.get('/competitions/:id', async (req, res) => {
     }
 });
 
+app.get('/competitions/:id/delete', requiresAuth(), async (req, res) => {
+    try {
+        const competitionId = parseInt(req.params.id);
+        const competition = await prisma.competitions.findUnique({
+            where: {
+                id: competitionId,
+            }
+        });
+
+        if (competition == null) {
+            res.status(404).send('Competition not found');
+            return;
+        }
+
+        if (competition.creatorUserId != req.oidc.user!.sub) {
+            res.status(403).send('Forbidden');
+            return;
+        }
+
+        await prisma.competitions.delete({
+            where: {
+                id: competitionId,
+            }
+        });
+
+        res.redirect('/competitions');
+    } catch (error) {
+        console.error('Error inserting data:', error);
+        res.status(500).json({ error: error.message || error });
+    }
+});
+
 app.post('/matches/:matchId', requiresAuth(), middleware.validateMatchData, async (req, res) => {
     try {
         const matchId = parseInt(req.params.matchId);

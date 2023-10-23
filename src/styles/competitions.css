@@ -48,10 +48,11 @@ ul {
 
 li {
     width: 80%;
+    display: flex;
+    flex-direction: row;
 }
 
 li a {
-    display: block;
     margin: 8px 0;
     padding: 10px 20px;
 
@@ -73,8 +74,26 @@ a {
   color: #007bff;
 }
 
-a:hover {
-  text-decoration: underline;
+a.competition {
+    flex-grow: 1;
+}
+
+a.delete-button {
+    margin: 8px 10px;
+    padding: 10px 12px;    
+    font-size: 16px;
+    background-color: #fff;
+    color: red;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 2px 2px 5px #eee;
+    cursor: pointer;
+    
+}
+
+a.delete-button:hover {
+    box-shadow: 2px 2px 5px #ddd;
+    background-color: #f0f0f0;
 }
 
 @media (max-width: 768px) {
